@@ -1,0 +1,222 @@
+//import * as React from 'react';
+import { Text, View, StyleSheet, TextInput, ScrollView, TouchableOpacity , Alert,Button } from 'react-native';
+import Constants from 'expo-constants';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
+import React from 'react';
+
+const createAlertt =()=>
+
+      Alert.alert(
+      "Congratulations",
+      "You signed up successfully!",
+      [
+       
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+     );
+export default function App() {
+  
+  const [data,setData]=React.useState({
+        
+        password: '',
+        check_textInputChange: false,
+        secureTextEntry: true,
+        isValidPassword: true
+    })
+    const handlePasswordChange = (val) => {
+        if (val.length >= 8) {
+            setData({
+                ...data,
+                password: val,
+                isValidPassword: true
+            });
+        } else {
+            setData({
+                ...data,
+                password: val,
+                isValidPassword: false
+            });
+        }
+    }
+ const updateSecureTextEntry = (val) => {
+        setData({
+            ...data,
+            secureTextEntry: !data.secureTextEntry,
+
+        }
+        );
+    }
+    
+
+  return (
+    <View style={{backgroundColor:"#fff0f5"}}>
+     <ScrollView>
+      <Text style={styles.paragraph}>
+        Sign up
+      </Text>
+      
+        <View>
+        
+        <View style={{flexDirection:"row", paddingLeft:5,paddingBottom:5,}}>
+        <FontAwesome
+        name="user"
+        size={15}
+        />
+        <Text style={styles.inputText}>
+          First Name
+        </Text>
+        
+        
+        </View>
+        <TextInput style={styles.input}
+        placeholder="First name"
+         
+        />
+         <View style={{flexDirection:"row", paddingLeft:5,paddingBottom:5,}}>
+        <FontAwesome
+        name="user"
+        size={15}
+        />
+        <Text style={styles.inputText}>
+        Last Name
+        </Text>
+        </View>
+         <TextInput style={styles.input}
+        placeholder="Last name"
+         
+        />
+        <View style={{flexDirection:"row",paddingLeft:5}}>
+        <FontAwesome
+        name="envelope"
+        size={15}
+        />
+        <Text style={styles.inputText}>Email</Text></View>
+        <TextInput style={styles.input}
+        placeholder="example@email.com"
+        autoCapitalize="none"
+        keyboardType='email-address'
+        
+        />
+        <View style={{flexDirection:"row",paddingLeft:5}}>
+        <FontAwesome
+        name="lock"
+        size={15}
+        />
+        <Text style={styles.inputText}>Password</Text>
+         
+        </View>
+        <View style={{flexDirection:'row'}}>
+        <TextInput style={styles.input}
+        placeholder="******"
+        secureTextEntry={data.secureTextEntry ? true : false}
+         onChangeText={(val) => handlePasswordChange(val)}
+        />
+         <TouchableOpacity
+                            onPress={updateSecureTextEntry}
+                        >
+                            {data.secureTextEntry ?
+                                <Feather
+                                    name="eye-off"
+                                    color="grey"
+                                    size={15}
+                                />
+                                :
+                                <Feather
+                                    name="eye"
+                                    color="grey"
+                                    size={15}
+                                />
+
+                            }
+                        </TouchableOpacity>
+                        </View>
+        <View style={{flexDirection:"row",paddingLeft:5}}>
+        <FontAwesome
+        name="lock"
+        size={16}
+        />
+        <Text style={styles.inputText}>Confirm Password</Text></View>
+        <View style={{flexDirection:'row'}}>
+        <TextInput style={styles.input}
+        placeholder="******"
+        secureTextEntry={data.secureTextEntry?true:false}
+        onChangeText={(val)=>handlePasswordChange(val)}
+        />
+        <TouchableOpacity onPress={updateSecureTextEntry}>
+        {data.secureTextEntry?
+        <Feather
+        name="eye-off"
+        size={15}
+        color='gray'
+        /> :
+        <Feather
+        name="eye"
+        size={15}
+        color='gray'
+        /> }
+        </TouchableOpacity>
+</View>
+        </View>
+        <View style={styles.button}>
+         <Button  title={"Continue"} onPress={createAlertt} />
+         </View>
+        <View style={styles.sign}>
+        <Text style={{ color: 'gray', fontSize: 15 }}>Already have an account? </Text>
+<TouchableOpacity>
+        <Text style={{ color: '#900C3F', fontSize: 15 }}>Sign In</Text>
+</TouchableOpacity>
+                    </View>
+        </ScrollView>
+        </View>
+    
+  );
+}
+
+const styles = StyleSheet.create({
+  inputText:{
+    color:'#900C3F',
+    fontSize:16,
+    fontWeight:"500",
+    paddingLeft:5,
+    
+  },
+  paragraph: {
+    paddingTop: Constants.statusBarHeight,
+    justifyContent: 'center',
+    margin: 24,
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color:'#900C3F',
+  },
+  input:{
+    fontSize: 11,
+    color :'black',
+    marginLeft:5,
+    paddingLeft:5,
+    borderRadius:6,
+    width:300,
+    height:30,
+    
+  },
+  button:{
+    flexGrow:1,
+    textAlign:"center",
+    justifyContent: 'center',
+    fontWeight:"bold",
+    fontSize:18,
+    color:"#900C3F",
+    margin:19,
+    
+    
+
+
+  },
+  sign: {
+        flexDirection: 'row',
+        marginLeft: 30,
+        justifyContent: 'center',
+        
+    },
+});
